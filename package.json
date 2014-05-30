@@ -1,0 +1,28 @@
+{
+  "name": "bangular",
+  "version": "0.1.0",
+  "description": "Backbone data model and collection for AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adrianlee44/bangular.git"
+  },
+  "author": "Adrian Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianlee44/bangular/issues"
+  },
+  "homepage": "https://github.com/adrianlee44/bangular",
+  "devDependencies": {
+    "grunt-chalkboard": "~0.2.3",
+    "grunt-karma": "~0.8.3",
+    "karma-jasmine": "~0.1.5",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "load-grunt-tasks": "~0.4.0",
+    "time-grunt": "~0.3.1",
+    "grunt-contrib-jshint": "~0.10.0"
+  }
+}

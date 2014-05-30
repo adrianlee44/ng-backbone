@@ -1,0 +1,31 @@
+{
+  "name": "bangular",
+  "version": "0.1.0",
+  "authors": [
+    "Adrian Lee <adrianlee44@gmail.com>"
+  ],
+  "description": "Backbone data model and collection for AngularJS",
+  "main": "bangular.js",
+  "keywords": [
+    "Backbone",
+    "AngularJS",
+    "data",
+    "model",
+    "collection"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/adrianlee44/bangular",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "angular": "~1.2.16",
+    "backbone": "~1.1.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.16"
+  }
+}

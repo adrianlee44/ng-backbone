@@ -1,0 +1,55 @@
+module.exports = function(grunt) {
+  require('load-grunt-tasks')(grunt);
+
+  require('time-grunt')(grunt);
+
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    bower: grunt.file.readJSON('bower.json'),
+    karma: {
+      options: {
+        configFile: 'karma.conf.js'
+      },
+      unit: {
+        singleRun: false,
+        autoWatch: true
+      },
+      ci: {
+        singleRun: true
+      }
+    },
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        quotmark: 'single',
+        undef: true,
+        unused: true,
+        strict: true,
+        browser: true,
+        eqnull: true,
+        globals: {
+          angular: true,
+          Backbone: true,
+          _: true
+        }
+      },
+      bangular: [
+        'bangular.js',
+        'test/*.js'
+      ]
+    },
+    chalkboard: {
+      bangular: {
+        files: [
+          {'doc.md':  ['bangular.js']}
+        ]
+      }
+    }
+  });
+
+  grunt.registerTask('default', [
+    'chalkboard',
+    'karma:ci'
+  ]);
+};
