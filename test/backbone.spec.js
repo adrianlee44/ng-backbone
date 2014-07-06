@@ -134,6 +134,20 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
+  it('should add querystring on read', function() {
+    $httpBackend.expectGET('/test?hello=world').respond(200, {});
+
+    Backbone.sync('read', tempModel, {
+      url: '/test',
+      data: {
+        hello: 'world'
+      }
+    });
+
+    $httpBackend.flush();
+
+  });
+
   it('should stingify attributes on create', function() {
     $httpBackend.expectPOST('/test', '{"hello":"world"}').respond(200, {});
 

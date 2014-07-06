@@ -42,6 +42,11 @@
           params.data = JSON.stringify(options.attrs || model.toJSON(options));
         }
 
+        // AngularJS $http doesn't convert data to querystring for GET method
+        if (method === 'read' && options.data != null) {
+          params.params = options.data;
+        }
+
         xhr = options.xhr = ajax(_.extend(params, options)).
           success(function(data) {
             if (options.success != null && _.isFunction(options.success)) {
