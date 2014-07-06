@@ -51,4 +51,24 @@ describe('BangularModel', function() {
     expect(change).toHaveBeenCalled();
     expect(changeFoo).toHaveBeenCalled();
   });
+
+  it('should unset a property on $attributes', function() {
+    tempModel = new BangularModel({
+      foo: 'bar'
+    });
+
+    tempModel.unset('foo');
+
+    expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(false);
+  });
+
+  it('should unset a property with removeBinding', function() {
+    tempModel = new BangularModel({
+      foo: 'bar'
+    });
+
+    tempModel.removeBinding('foo');
+
+    expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(false);
+  });
 });

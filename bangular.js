@@ -84,42 +84,83 @@
      * @chalk
      * @name BangularModel
      * @description
-     * Base Bangular model with basic customization to support $attributes
-     * When overriding initialize method and you would like to keep `$attributes` feature, you'll have to
-     * explicity call BangularModel initialize:
+     * Base Bangular model with support for $attributes
+     * When overriding set method and you would like to keep `$attributes` feature, you'll have to
+     * explicity call BangularModel set:
      * ```
      * var Sample = BangularModel.extend({
-     *   initialize: function(attributes, options) {
-     *     BangularModel.prototype.initialize.apply(this, arguments);
+     *   set: function(key, val, options) {
+     *     BangularModel.prototype.set.apply(this, arguments);
      *   }
      * });
      * ```
      */
     factory('BangularModel', ['Backbone', function(Backbone) {
+      var defineProperty;
+
+      defineProperty = function(key) {
+        var self = this;
+        Object.defineProperty(this.$attributes, key, {
+          enumerable: true,
+          configurable: true,
+          get: function() {
+            return self.get(key);
+          },
+          set: function(newValue) {
+            self.set(key, newValue);
+          }
+        });
+      };
+
       return Backbone.Model.extend({
-        initialize: function(attributes, options) {
-          var key, value, defineProperty, self = this;
+        set: function(key, val, options) {
+          if (Backbone.Model.prototype.set.apply(this, arguments)) {
+            this.setBinding(key, val, options);
+          }
+        },
 
-          this.$attributes = {};
+        /**
+         * @chalk
+         * @private
+         * @name setBinding
+         * @description
+         *
+         */
+        setBinding: function(key, val, options) {
+          var attr, attrs, unset;
 
-          defineProperty = function(propertyKey) {
-            var value = attributes[propertyKey];
-            Object.defineProperty(self.$attributes, propertyKey, {
-              enumerable: true,
-              get: function() {
-                return self.get(propertyKey);
-              },
-              set: function(newValue) {
-                self.set(propertyKey, newValue);
-              }
-            });
-          };
-
-          for (key in attributes) {
-            defineProperty(key);
+          if (key == null) {
+            return this;
           }
 
-          Backbone.Model.prototype.initialize.apply(this, arguments);
+          if (_.isObject(key)) {
+            attrs = key;
+            options = val;
+          } else {
+            (attrs = {})[key] = val;
+          }
+
+          options || (options = {});
+
+          if (this.$attributes == null) {
+            this.$attributes = {};
+          }
+
+          unset = options.unset;
+
+          for (attr in attrs) {
+            if (unset && this.$attributes.hasOwnProperty(attr)) {
+              delete this.$attributes[attr]
+            } else if (!unset && !this.$attributes[attr]) {
+              defineProperty.call(this, attr);
+            }
+          }
+
+          return this;
+        },
+
+        removeBinding: function(attr, options) {
+          return this.setBinding(attr, void 0, _.extend({}, options, {unset: true}));
         }
       });
     }]).
@@ -127,6 +168,17 @@
     /**
      * @chalk
      * @name BangularCollection
+     * @description
+     * Base Bangular collection with support for $models
+     * When overriding initialize method and you would like to keep `$models` feature, you'll have to
+     * explicity call BangularCollection initialize:
+     * ```
+     * var SampleCollection = BangularCollection.extend({
+     *   initialize: function(models, options) {
+     *     BangularCollection.prototype.initialize.apply(this, arguments);
+     *   }
+     * });
+     * ```
      */
     factory('BangularCollection', ['Backbone', 'BangularModel', function(Backbone, BangularModel) {
       return Backbone.Collection.extend({
