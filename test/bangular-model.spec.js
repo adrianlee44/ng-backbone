@@ -67,7 +67,7 @@ describe('BangularModel', function() {
       foo: 'bar'
     });
 
-    tempModel.removeBinding('foo');
+    tempModel.$removeBinding('foo');
 
     expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(false);
   });

@@ -59,7 +59,7 @@
             }
           });
 
-        model.trigger('request', model, xhr, options);
+        model.trigger('request', model, xhr, _.extend(params, options));
 
         return xhr;
       };
@@ -84,8 +84,8 @@
      * @chalk
      * @name BangularModel
      * @description
-     * Base Bangular model with support for $attributes
-     * When overriding set method and you would like to keep `$attributes` feature, you'll have to
+     * Base Bangular model with support for $attributes, $status and event propagations
+     * When overriding set method but would like to keep `$attributes` feature, you'll have to
      * explicity call BangularModel set:
      * ```
      * var Sample = BangularModel.extend({
@@ -94,8 +94,23 @@
      *   }
      * });
      * ```
+     *
+     * `$attributes` allows application to use AngularJS two-way binding to
+     * manipulate Backbone objects using Backbone `get` and `set`
+     * HTML:
+     * ```html
+     * <input type="text" ng-model="person.$attributes.name">
+     * ```
+     *
+     * Javascript:
+     * ```javascript
+     * $scope.person = new Person({
+     *   name: 'John'
+     * });
+     * ```
+     *
      */
-    factory('BangularModel', ['Backbone', function(Backbone) {
+    factory('BangularModel', ['$rootScope', 'Backbone', function($rootScope, Backbone) {
       var defineProperty;
 
       defineProperty = function(key) {
@@ -113,10 +128,52 @@
       };
 
       return Backbone.Model.extend({
+        initialize: function() {
+          this.$status = {
+            deleting: false,
+            loading:  false,
+            saving:   false,
+            syncing:  false
+          };
+
+          this.on('request', function(model, xhr, options) {
+            this.$setStatus({
+              deleting: (options.method === 'DELETE'),
+              loading:  (options.method === 'GET'),
+              saving:   (options.method === 'POST' || options.method === 'PUT'),
+              syncing:  true
+            });
+          });
+
+          this.on('sync error', this.$resetStatus);
+
+          Backbone.Model.prototype.initialize.apply(this, arguments);
+        },
+
         set: function(key, val, options) {
-          if (Backbone.Model.prototype.set.apply(this, arguments)) {
-            this.setBinding(key, val, options);
+          var output;
+
+          if (output = Backbone.Model.prototype.set.apply(this, arguments)) {
+            this.$setBinding(key, val, options);
           }
+
+          return output;
+        },
+
+        /**
+         * @chalk
+         * @name $resetStatus
+         * @description
+         * Reset all statuses including `deleting`, `loading`, `saving`, and
+         * `syncing` back to false
+         */
+        $resetStatus: function() {
+          return this.$setStatus({
+            deleting: false,
+            loading:  false,
+            saving:   false,
+            syncing:  false
+          });
         },
 
         /**
@@ -126,7 +183,7 @@
          * @description
          *
          */
-        setBinding: function(key, val, options) {
+        $setBinding: function(key, val, options) {
           var attr, attrs, unset;
 
           if (key == null) {
@@ -140,7 +197,7 @@
             (attrs = {})[key] = val;
           }
 
-          options || (options = {});
+          options = options || {};
 
           if (this.$attributes == null) {
             this.$attributes = {};
@@ -150,7 +207,7 @@
 
           for (attr in attrs) {
             if (unset && this.$attributes.hasOwnProperty(attr)) {
-              delete this.$attributes[attr]
+              delete this.$attributes[attr];
             } else if (!unset && !this.$attributes[attr]) {
               defineProperty.call(this, attr);
             }
@@ -159,8 +216,40 @@
           return this;
         },
 
-        removeBinding: function(attr, options) {
-          return this.setBinding(attr, void 0, _.extend({}, options, {unset: true}));
+        /**
+         * @chalk
+         * @name $setStatus
+         * @description
+         * Update model status
+         *
+         * @param {Object} attributes Set one or multiple statuses
+         * @param {Object} options Options
+         */
+        $setStatus: function(key, value, options) {
+          var attr, attrs;
+
+          if (key == null) {
+            return this;
+          }
+
+          if (_.isObject(key)) {
+            attrs = key;
+            options = value;
+          } else {
+            (attrs = {})[key] = value;
+          }
+
+          options = options || {};
+
+          for (attr in this.$status) {
+            if (attrs.hasOwnProperty(attr) && _.isBoolean(attrs[attr])) {
+              this.$status[attr] = attrs[attr];
+            }
+          }
+        },
+
+        $removeBinding: function(attr, options) {
+          return this.$setBinding(attr, void 0, _.extend({}, options, {unset: true}));
         }
       });
     }]).
@@ -184,8 +273,27 @@
       return Backbone.Collection.extend({
         model: BangularModel,
 
-        initialize: function(models, options) {
+        initialize: function() {
           var self = this;
+
+          // Initialize status object
+          this.$status = {
+            deleting: false,
+            loading:  false,
+            saving:   false,
+            syncing:  false
+          };
+
+          this.on('request', function(model, xhr, options) {
+            this.$setStatus({
+              deleting: (options.method === 'DELETE'),
+              loading:  (options.method === 'GET'),
+              saving:   (options.method === 'POST' || options.method === 'PUT'),
+              syncing:  true
+            });
+          });
+
+          this.on('sync error', this.$resetStatus);
 
           Object.defineProperty(this, '$models', {
             enumerable: true,
@@ -195,6 +303,38 @@
           });
 
           Backbone.Collection.prototype.initialize.apply(this, arguments);
+        },
+
+        $setStatus: function(key, value, options) {
+          var attr, attrs;
+
+          if (key == null) {
+            return this;
+          }
+
+          if (_.isObject(key)) {
+            attrs = key;
+            options = value;
+          } else {
+            (attrs = {})[key] = value;
+          }
+
+          options = options || {};
+
+          for (attr in this.$status) {
+            if (attrs.hasOwnProperty(attr) && _.isBoolean(attrs[attr])) {
+              this.$status[attr] = attrs[attr];
+            }
+          }
+        },
+
+        $resetStatus: function() {
+          return this.$setStatus({
+            deleting: false,
+            loading:  false,
+            saving:   false,
+            syncing:  false
+          });
         }
       });
     }]);
