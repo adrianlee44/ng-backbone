@@ -71,4 +71,131 @@ describe('BangularModel', function() {
 
     expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(false);
   });
+
+  describe('$status', function() {
+    var model, $httpBackend;
+
+    beforeEach(inject(function(_$httpBackend_) {
+      model = new BangularModel();
+
+      $httpBackend = _$httpBackend_;
+    }));
+
+    it('should create $status object', function() {
+      expect(model.$status).toBeDefined();
+    });
+
+    it('should default all status to false', function() {
+      expect(model.$status.deleting).toBe(false);
+      expect(model.$status.loading).toBe(false);
+      expect(model.$status.saving).toBe(false);
+      expect(model.$status.syncing).toBe(false);
+    });
+
+    describe('syncing should be updated', function(){
+      it('should set on GET request', function() {
+        $httpBackend.when('GET', '/get').respond({});
+
+        model.fetch({url: '/get'});
+
+        expect(model.$status.syncing).toBe(true);
+
+        $httpBackend.flush();
+      });
+
+      it('should set on POST request', function() {
+        $httpBackend.when('POST', '/post').respond({});
+
+        model.save({}, {url: '/post'});
+
+        expect(model.$status.syncing).toBe(true);
+
+        $httpBackend.flush();
+      });
+    });
+
+    describe('loading should be updated', function() {
+      it('should set on GET request', function() {
+        $httpBackend.when('GET', '/get').respond({});
+
+        model.fetch({url: '/get'});
+
+        expect(model.$status.loading).toBe(true);
+
+        $httpBackend.flush();
+      });
+
+      it('should not set on POST request', function() {
+        $httpBackend.when('POST', '/post').respond({});
+
+        model.save({}, {url: '/post'});
+
+        expect(model.$status.loading).toBe(false);
+
+        $httpBackend.flush();
+      });
+    });
+
+    describe('saving should be updated', function() {
+      it('should set on POST request', function() {
+        $httpBackend.when('POST', '/post').respond({});
+
+        model.save({}, {url: '/post'});
+
+        expect(model.$status.saving).toBe(true);
+
+        $httpBackend.flush();
+      });
+
+      it('should set on PUT request', function() {
+        $httpBackend.when('PUT', '/put').respond({});
+
+        model = new BangularModel({
+          id: 'test-123'
+        });
+
+        model.save({name: 'hello'}, {url: '/put'});
+
+        expect(model.$status.saving).toBe(true);
+
+        $httpBackend.flush();
+      });
+
+      it('should not set on GET request', function() {
+        $httpBackend.when('GET', '/get').respond({});
+
+        model.fetch({url: '/get'});
+
+        expect(model.$status.saving).toBe(false);
+
+        $httpBackend.flush();
+      });
+    });
+
+    describe('deleting should be updated', function() {
+      it('should set on DELETE request', function() {
+        $httpBackend.when('DELETE', '/delete').respond({});
+
+        model = new BangularModel({
+          id: 'test-123'
+        });
+
+        model.destroy({url: '/delete'});
+
+        expect(model.$status.deleting).toBe(true);
+
+        $httpBackend.flush();
+      });
+
+      it('should not set on POST request', function() {
+        $httpBackend.when('POST', '/post').respond({});
+
+        model.save({}, {url: '/post'});
+
+        expect(model.$status.deleting).toBe(false);
+
+        $httpBackend.flush();
+      });
+    });
+  });
 });
