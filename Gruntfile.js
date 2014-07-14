@@ -34,10 +34,23 @@ module.exports = function(grunt) {
           _: true
         }
       },
-      bangular: [
-        'bangular.js',
-        'test/*.js'
-      ]
+      bangular: ['bangular.js'],
+      test: {
+        options: {
+          strict: false,
+          globals: {
+            afterEach: true,
+            beforeEach: true,
+            describe: true,
+            expect: true,
+            inject: true,
+            it: true,
+            jasmine: true,
+            module: true
+          }
+        },
+        src: ['test/*.spec.js']
+      }
     },
     chalkboard: {
       bangular: {
