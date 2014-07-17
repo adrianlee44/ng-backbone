@@ -55,7 +55,7 @@ module.exports = function(grunt) {
     chalkboard: {
       bangular: {
         files: [
-          {'doc.md':  ['bangular.js']}
+          {'README.md':  ['bangular.js']}
         ]
       }
     }
