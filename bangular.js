@@ -1,17 +1,23 @@
-/**
- * @chalk
- * @name Bangular
- * @version 0.1.0
- * @author Adrian Lee adrian@adrianlee.me
- * @license MIT
- * @description
- * Backbone data model and collection for AngularJS
- */
+/*
+  @chalk
+  @name Bangular
+  @version 0.1.0
+  @author @adrianthemole
+  @license MIT
+  @description
+  Backbone data model and collection for AngularJS
+*/
 
 (function(window, document, undefined) {
   'use strict';
 
   angular.module('Bangular', []).
+    /*
+      @chalk
+      @name Backbone factory
+      @description
+      To make Backbone work properly with AngularJS, Bangular override Backbone's sync and ajax methods. Application using Bangular should take advantage of Backbone factory to use $http service and invoke AngularJS cycle properly
+    */
     factory('Backbone', ['$http', function($http) {
       var methodMap, sync, ajax;
 
@@ -64,12 +70,13 @@
         return xhr;
       };
 
-      /**
-       * @chalk
-       * @name ajax
-       * @description
-       * Making ajax request
-       */
+      /*
+        @chalk
+        @private
+        @name ajax
+        @description
+        Making ajax request
+      */
       ajax = function() {
         return $http.apply($http, arguments);
       };
@@ -80,36 +87,33 @@
       });
     }]).
 
-    /**
-     * @chalk
-     * @name BangularModel
-     * @description
-     * Base Bangular model with support for $attributes, $status and event propagations
-     * When overriding set method but would like to keep `$attributes` feature, you'll have to
-     * explicity call BangularModel set:
-     * ```
-     * var Sample = BangularModel.extend({
-     *   set: function(key, val, options) {
-     *     BangularModel.prototype.set.apply(this, arguments);
-     *   }
-     * });
-     * ```
-     *
-     * `$attributes` allows application to use AngularJS two-way binding to
-     * manipulate Backbone objects using Backbone `get` and `set`
-     * HTML:
-     * ```html
-     * <input type="text" ng-model="person.$attributes.name">
-     * ```
-     *
-     * Javascript:
-     * ```javascript
-     * $scope.person = new Person({
-     *   name: 'John'
-     * });
-     * ```
-     *
-     */
+    /*
+      @chalk
+      @name BangularModel
+      @description
+      Base Bangular model with support for $attributes, $status and event propagations When overriding set method but would like to keep  `$attributes` feature, you'll have to explicity call BangularModel set:
+      ```
+      var Sample = BangularModel.extend({
+        set: function(key, val, options) {
+          BangularModel.prototype.set.apply(this, arguments);
+        }
+      });
+      ```
+
+      `$attributes` allows application to use AngularJS two-way binding to manipulate Backbone objects using Backbone `get` and `set`
+      HTML:
+      ```html
+      <input type="text" ng-model="person.$attributes.name">
+      ```
+
+      Javascript:
+      ```javascript
+      $scope.person = new Person({
+        name: 'John'
+      });
+      ```
+
+    */
     factory('BangularModel', ['$rootScope', 'Backbone', function($rootScope, Backbone) {
       var defineProperty;
 
@@ -160,13 +164,12 @@
           return output;
         },
 
-        /**
-         * @chalk
-         * @name $resetStatus
-         * @description
-         * Reset all statuses including `deleting`, `loading`, `saving`, and
-         * `syncing` back to false
-         */
+        /*
+          @chalk
+          @name $resetStatus
+          @description
+          Reset all statuses including `deleting`, `loading`, `saving`, and `syncing` back to false
+        */
         $resetStatus: function() {
           return this.$setStatus({
             deleting: false,
@@ -176,13 +179,13 @@
           });
         },
 
-        /**
-         * @chalk
-         * @private
-         * @name setBinding
-         * @description
-         *
-         */
+        /*
+          @chalk
+          @private
+          @name setBinding
+          @description
+          Add binding on `$attributes` to a key on `attributes`
+        */
         $setBinding: function(key, val, options) {
           var attr, attrs, unset;
 
@@ -216,15 +219,15 @@
           return this;
         },
 
-        /**
-         * @chalk
-         * @name $setStatus
-         * @description
-         * Update model status
-         *
-         * @param {Object} attributes Set one or multiple statuses
-         * @param {Object} options Options
-         */
+        /*
+          @chalk
+          @name $setStatus
+          @description
+          Update model status
+
+          @param {Object} attributes Set one or multiple statuses
+          @param {Object} options Options
+        */
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
@@ -254,21 +257,19 @@
       });
     }]).
 
-    /**
-     * @chalk
-     * @name BangularCollection
-     * @description
-     * Base Bangular collection with support for $models
-     * When overriding initialize method and you would like to keep `$models` feature, you'll have to
-     * explicity call BangularCollection initialize:
-     * ```
-     * var SampleCollection = BangularCollection.extend({
-     *   initialize: function(models, options) {
-     *     BangularCollection.prototype.initialize.apply(this, arguments);
-     *   }
-     * });
-     * ```
-     */
+    /*
+      @chalk
+      @name BangularCollection
+      @description
+      Base Bangular collection with support for $models. When overriding initialize method and you would like to keep `$models` feature, you'll have to explicity call BangularCollection initialize:
+      ```javascript
+      var SampleCollection = BangularCollection.extend({
+        initialize: function(models, options) {
+          BangularCollection.prototype.initialize.apply(this, arguments);
+        }
+      });
+      ```
+    */
     factory('BangularCollection', ['Backbone', 'BangularModel', function(Backbone, BangularModel) {
       return Backbone.Collection.extend({
         model: BangularModel,
@@ -305,6 +306,15 @@
           Backbone.Collection.prototype.initialize.apply(this, arguments);
         },
 
+        /*
+          @chalk
+          @name $setStatus
+          @function
+          @description
+          Update collection status
+          @param {Object} attributes Set on or multiple statuses
+          @param {Object} options    Options
+        */
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
@@ -328,6 +338,13 @@
           }
         },
 
+        /*
+          @chalk
+          @name $resetStatus
+          @function
+          @description
+          Reset all statuses including `deleting`, `loading`, `saving`, and `syncing` back to false
+        */
         $resetStatus: function() {
           return this.$setStatus({
             deleting: false,
