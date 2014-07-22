@@ -7,6 +7,11 @@ Bangular
   
 Version: `0.1.0`  
 
+### Dependencies
+  - [AngualrJS](https://angularjs.org)  
+  - [BackboneJS](http://backbonejs.org)  
+  - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)  
+
 
 Backbone factory
 ---

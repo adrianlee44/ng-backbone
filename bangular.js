@@ -4,6 +4,10 @@
   @version 0.1.0
   @author [@adrianthemole](http://twitter.com/adrianthemole)
   @license MIT
+  @dependencies
+  - [AngualrJS](https://angularjs.org)
+  - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
+  - [BackboneJS](http://backbonejs.org)
   @description
   Backbone data model and collection for AngularJS
 
