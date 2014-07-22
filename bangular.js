@@ -25,7 +25,7 @@
       To make Backbone work properly with AngularJS, Bangular overrides Backbone's sync and ajax methods.
     */
     factory('Backbone', ['$http', function($http) {
-      var methodMap, sync, ajax;
+      var methodMap, sync, ajax, isUndefined = _.isUndefined;
 
       methodMap = {
         create: 'POST',
@@ -38,7 +38,7 @@
       sync = function(method, model, options) {
         var params, xhr;
 
-        if (options == null) {
+        if (isUndefined(options)) {
           options = {};
         }
 
@@ -50,23 +50,23 @@
           params.url = _.result(model, 'url');
         }
 
-        if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
+        if (isUndefined(options.data) && model && (method === 'create' || method === 'update' || method === 'patch')) {
           params.data = JSON.stringify(options.attrs || model.toJSON(options));
         }
 
         // AngularJS $http doesn't convert data to querystring for GET method
-        if (method === 'read' && options.data != null) {
+        if (method === 'read' && !isUndefined(options.data)) {
           params.params = options.data;
         }
 
         xhr = options.xhr = ajax(_.extend(params, options)).
           success(function(data) {
-            if (options.success != null && _.isFunction(options.success)) {
+            if (!isUndefined(options.success) && _.isFunction(options.success)) {
               options.success(data);
             }
           }).
           error(function(data) {
-            if (options.error != null && _.isFunction(options.error)) {
+            if (!isUndefined(options.error) && _.isFunction(options.error)) {
               options.error(data);
             }
           });
@@ -187,9 +187,10 @@
         },
 
         set: function(key, val, options) {
-          var output;
+          var output = Backbone.Model.prototype.set.apply(this, arguments);
 
-          if (output = Backbone.Model.prototype.set.apply(this, arguments)) {
+          // Do not set binding if attributes are invalid
+          if (output) {
             this.$setBinding(key, val, options);
           }
 
@@ -221,7 +222,7 @@
         $setBinding: function(key, val, options) {
           var attr, attrs, unset;
 
-          if (key == null) {
+          if (_.isUndefined(key)) {
             return this;
           }
 
@@ -234,7 +235,7 @@
 
           options = options || {};
 
-          if (this.$attributes == null) {
+          if (_.isUndefined(this.$attributes)) {
             this.$attributes = {};
           }
 
@@ -263,7 +264,7 @@
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
-          if (key == null) {
+          if (_.isUndefined(key)) {
             return this;
           }
 
@@ -386,7 +387,7 @@
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
-          if (key == null) {
+          if (_.isUndefined(key)) {
             return this;
           }
 
