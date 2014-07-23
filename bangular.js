@@ -36,30 +36,28 @@
       };
 
       sync = function(method, model, options) {
-        var params, xhr;
-
+        // Default options to empty object
         if (isUndefined(options)) {
           options = {};
         }
 
-        params = {
-          method: methodMap[method]
-        };
+        var httpMethod = options.method || methodMap[method],
+            params = {method: httpMethod};
 
         if (!options.url) {
           params.url = _.result(model, 'url');
         }
 
-        if (isUndefined(options.data) && model && (method === 'create' || method === 'update' || method === 'patch')) {
+        if (isUndefined(options.data) && model && (httpMethod === 'POST' || httpMethod === 'PUT' || httpMethod === 'PATCH')) {
           params.data = JSON.stringify(options.attrs || model.toJSON(options));
         }
 
         // AngularJS $http doesn't convert data to querystring for GET method
-        if (method === 'read' && !isUndefined(options.data)) {
+        if (httpMethod === 'GET' && !isUndefined(options.data)) {
           params.params = options.data;
         }
 
-        xhr = options.xhr = ajax(_.extend(params, options)).
+        var xhr = options.xhr = ajax(_.extend(params, options)).
           success(function(data) {
             if (!isUndefined(options.success) && _.isFunction(options.success)) {
               options.success(data);

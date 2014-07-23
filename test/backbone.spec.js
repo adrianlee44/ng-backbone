@@ -104,6 +104,17 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
+  it('should make a POST request using fetch with options override', function() {
+    $httpBackend.expectPOST('/test').respond(200, {});
+
+    Backbone.sync('create', tempModel, {
+      method: 'POST',
+      url: '/test'
+    });
+
+    $httpBackend.flush();
+  });
+
   it('should make a DELETE request', function() {
     $httpBackend.expectDELETE('/test').respond(200, {});
 
