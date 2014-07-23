@@ -9,7 +9,7 @@
   - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
   - [BackboneJS](http://backbonejs.org)
   @description
-  Backbone data model and collection for AngularJS
+  Backbone data model and collection for AngularJS (Currently still experimental)
 
   [![Build Status](http://img.shields.io/travis/adrianlee44/bangular.svg?style=flat)](https://travis-ci.org/adrianlee44/bangular)
 */
