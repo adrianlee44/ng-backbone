@@ -11,6 +11,10 @@ describe('BangularCollection', function() {
     collection = new BangularCollection();
   });
 
+  it('should have BangularCollection as the constructor name', function(){
+    expect(collection.constructor.name).toBe('BangularCollection');
+  });
+
   it('should create $models object', function() {
     expect(collection.$models).toBeDefined();
   });
@@ -32,7 +36,7 @@ describe('BangularCollection', function() {
     var $httpBackend;
 
     beforeEach(inject(function(_$httpBackend_){
-      $httpBackend = _$httpBackend_
+      $httpBackend = _$httpBackend_;
     }));
 
     it('should create $status object', function() {

@@ -104,11 +104,12 @@
       });
       ```
 
-      In addition, if you are overriding BangularModel `initialize` method but you would like to keep `$status`, you'll have to explicictly call BangularModel initialize:
+      In rare cases when you want to override the constructor which allows you to replace the actual constructor function for your model, you should invoke BangularModel constructor in the end.
       ```javascript
       var Sample = BangularModel.extend({
-        initialize: function(key, val, options) {
-          BangularModel.prototype.initialize.apply(this, arguments);
+        constructor: function() {
+          this.text = 'Sample!';
+          BangularModel.apply(this, arguments);
         }
       });
       ```
@@ -162,7 +163,7 @@
       };
 
       return Backbone.Model.extend({
-        initialize: function() {
+        constructor: function BangularModel() {
           this.$status = {
             deleting: false,
             loading:  false,
@@ -181,7 +182,7 @@
 
           this.on('sync error', this.$resetStatus);
 
-          Backbone.Model.prototype.initialize.apply(this, arguments);
+          return Backbone.Model.apply(this, arguments);
         },
 
         set: function(key, val, options) {
@@ -292,11 +293,15 @@
       @chalk
       @name BangularCollection
       @description
-      Base Bangular collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`. When overriding initialize method but you would like to keep `$models` feature, you'll have to explicity call BangularCollection initialize:
+      Base Bangular collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`.
+
+      Similar to BangularModel, in rare cases where you may want to override the constructor, you should invoke BangularCollection in the end.
       ```javascript
       var SampleCollection = BangularCollection.extend({
-        initialize: function(models, options) {
-          BangularCollection.prototype.initialize.apply(this, arguments);
+        constructor: function(models, options) {
+          this.allSamples = false;
+
+          BangularCollection.apply(this, arguments);
         }
       });
       ```
@@ -340,7 +345,7 @@
       return Backbone.Collection.extend({
         model: BangularModel,
 
-        initialize: function() {
+        constructor: function BangularCollection() {
           var self = this;
 
           // Initialize status object
@@ -369,7 +374,7 @@
             }
           });
 
-          Backbone.Collection.prototype.initialize.apply(this, arguments);
+          Backbone.Collection.apply(this, arguments);
         },
 
         /*

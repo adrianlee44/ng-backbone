@@ -11,6 +11,10 @@ describe('BangularModel', function() {
     tempModel = new BangularModel();
   });
 
+  it('should have BangularModel as the constructor name', function(){
+    expect(tempModel.constructor.name).toBe('BangularModel');
+  });
+
   it('should create $attributes object', function() {
     expect(tempModel.$attributes).toBeDefined();
   });
