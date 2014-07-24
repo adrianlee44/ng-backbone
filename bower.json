@@ -1,11 +1,11 @@
 {
-  "name": "bangular",
+  "name": "ng-backbone",
   "version": "0.1.0",
   "authors": [
     "Adrian Lee <adrianlee44@gmail.com>"
   ],
   "description": "Backbone data model and collection for AngularJS",
-  "main": "bangular.js",
+  "main": "ng-backbone.js",
   "keywords": [
     "Backbone",
     "AngularJS",
@@ -14,7 +14,7 @@
     "collection"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/adrianlee44/bangular",
+  "homepage": "https://github.com/adrianlee44/ng-backbone",
   "ignore": [
     "**/.*",
     "node_modules",

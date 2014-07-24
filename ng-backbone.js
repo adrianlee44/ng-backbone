@@ -1,6 +1,6 @@
 /*
   @chalk
-  @name Bangular
+  @name ng-backbone
   @version 0.1.0
   @author [@adrianthemole](http://twitter.com/adrianthemole)
   @license MIT
@@ -11,18 +11,18 @@
   @description
   Backbone data model and collection for AngularJS (Currently still experimental)
 
-  [![Build Status](http://img.shields.io/travis/adrianlee44/bangular.svg?style=flat)](https://travis-ci.org/adrianlee44/bangular)
+  [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat)](https://travis-ci.org/adrianlee44/ng-backbone)
 */
 
 (function(window, document, undefined) {
   'use strict';
 
-  angular.module('Bangular', []).
+  angular.module('ngBackbone', []).
     /*
       @chalk
       @name Backbone factory
       @description
-      To make Backbone work properly with AngularJS, Bangular overrides Backbone's sync and ajax methods.
+      To make Backbone work properly with AngularJS, ng-backbone overrides Backbone's sync and ajax methods.
     */
     factory('Backbone', ['$http', function($http) {
       var methodMap, sync, ajax, isUndefined = _.isUndefined;
@@ -93,23 +93,23 @@
 
     /*
       @chalk
-      @name BangularModel
+      @name NgBackboneModel
       @description
-      Base Bangular model extends Backbone.model by adding additional properties and functions, including `$attributes` and `$status`. When overriding BangularModel `set` method but you would like to keep `$attributes`, you'll have to explicitly call BangularModel set:
+      Base NgBackbone model extends Backbone.model by adding additional properties and functions, including `$attributes` and `$status`. When overriding NgBackboneModel `set` method but you would like to keep `$attributes`, you'll have to explicitly call NgBackboneModel set:
       ```javascript
-      var Sample = BangularModel.extend({
+      var Sample = NgBackboneModel.extend({
         set: function(key, val, options) {
-          BangularModel.prototype.set.apply(this, arguments);
+          NgBackboneModel.prototype.set.apply(this, arguments);
         }
       });
       ```
 
-      In rare cases when you want to override the constructor which allows you to replace the actual constructor function for your model, you should invoke BangularModel constructor in the end.
+      In rare cases when you want to override the constructor which allows you to replace the actual constructor function for your model, you should invoke NgBackboneModel constructor in the end.
       ```javascript
-      var Sample = BangularModel.extend({
+      var Sample = NgBackboneModel.extend({
         constructor: function() {
           this.text = 'Sample!';
-          BangularModel.apply(this, arguments);
+          NgBackboneModel.apply(this, arguments);
         }
       });
       ```
@@ -145,7 +145,7 @@
       $scope.user.fetch();
       ```
     */
-    factory('BangularModel', ['$rootScope', 'Backbone', function($rootScope, Backbone) {
+    factory('NgBackboneModel', ['$rootScope', 'Backbone', function($rootScope, Backbone) {
       var defineProperty;
 
       defineProperty = function(key) {
@@ -163,7 +163,7 @@
       };
 
       return Backbone.Model.extend({
-        constructor: function BangularModel() {
+        constructor: function NgBackboneModel() {
           this.$status = {
             deleting: false,
             loading:  false,
@@ -291,17 +291,17 @@
 
     /*
       @chalk
-      @name BangularCollection
+      @name NgBackboneCollection
       @description
-      Base Bangular collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`.
+      Base NgBackbone collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`.
 
-      Similar to BangularModel, in rare cases where you may want to override the constructor, you should invoke BangularCollection in the end.
+      Similar to NgBackboneModel, in rare cases where you may want to override the constructor, you should invoke NgBackboneCollection in the end.
       ```javascript
-      var SampleCollection = BangularCollection.extend({
+      var SampleCollection = NgBackboneCollection.extend({
         constructor: function(models, options) {
           this.allSamples = false;
 
-          BangularCollection.apply(this, arguments);
+          NgBackboneCollection.apply(this, arguments);
         }
       });
       ```
@@ -341,11 +341,11 @@
       ```
 
     */
-    factory('BangularCollection', ['Backbone', 'BangularModel', function(Backbone, BangularModel) {
+    factory('NgBackboneCollection', ['Backbone', 'NgBackboneModel', function(Backbone, NgBackboneModel) {
       return Backbone.Collection.extend({
-        model: BangularModel,
+        model: NgBackboneModel,
 
-        constructor: function BangularCollection() {
+        constructor: function NgBackboneCollection() {
           var self = this;
 
           // Initialize status object

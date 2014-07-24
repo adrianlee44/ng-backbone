@@ -1,18 +1,18 @@
-describe('BangularCollection', function() {
-  var BangularCollection, collection;
+describe('NgBackboneCollection', function() {
+  var NgBackboneCollection, collection;
 
   beforeEach(function() {
-    module('Bangular');
+    module('ngBackbone');
 
-    inject(function(_BangularCollection_) {
-      BangularCollection = _BangularCollection_;
+    inject(function(_NgBackboneCollection_) {
+      NgBackboneCollection = _NgBackboneCollection_;
     });
 
-    collection = new BangularCollection();
+    collection = new NgBackboneCollection();
   });
 
-  it('should have BangularCollection as the constructor name', function(){
-    expect(collection.constructor.name).toBe('BangularCollection');
+  it('should have NgBackboneCollection as the constructor name', function(){
+    expect(collection.constructor.name).toBe('NgBackboneCollection');
   });
 
   it('should create $models object', function() {

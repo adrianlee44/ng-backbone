@@ -2,7 +2,7 @@ describe('Backbone', function() {
   var Backbone, $httpBackend, tempModel;
 
   beforeEach(function() {
-    module('Bangular');
+    module('ngBackbone');
 
     inject(function(_$httpBackend_, _Backbone_) {
       $httpBackend = _$httpBackend_;

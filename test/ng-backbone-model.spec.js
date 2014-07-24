@@ -1,18 +1,18 @@
-describe('BangularModel', function() {
-  var BangularModel, tempModel;
+describe('NgBackboneModel', function() {
+  var NgBackboneModel, tempModel;
 
   beforeEach(function() {
-    module('Bangular');
+    module('ngBackbone');
 
-    inject(function(_BangularModel_) {
-      BangularModel = _BangularModel_;
+    inject(function(_NgBackboneModel_) {
+      NgBackboneModel = _NgBackboneModel_;
     });
 
-    tempModel = new BangularModel();
+    tempModel = new NgBackboneModel();
   });
 
-  it('should have BangularModel as the constructor name', function(){
-    expect(tempModel.constructor.name).toBe('BangularModel');
+  it('should have NgBackboneModel as the constructor name', function(){
+    expect(tempModel.constructor.name).toBe('NgBackboneModel');
   });
 
   it('should create $attributes object', function() {
@@ -20,7 +20,7 @@ describe('BangularModel', function() {
   });
 
   it('should get the correct attribute', function() {
-    tempModel = new BangularModel({
+    tempModel = new NgBackboneModel({
       hello: 'world',
       foo: 'bar'
     });
@@ -30,7 +30,7 @@ describe('BangularModel', function() {
   });
 
   it('should set an attribute', function() {
-    tempModel = new BangularModel({
+    tempModel = new NgBackboneModel({
       test: 'foo'
     });
 
@@ -44,7 +44,7 @@ describe('BangularModel', function() {
         changeFoo = jasmine.createSpy('change:foo');
 
 
-    tempModel = new BangularModel({
+    tempModel = new NgBackboneModel({
       foo: 'bar'
     });
     tempModel.on('change', change);
@@ -57,7 +57,7 @@ describe('BangularModel', function() {
   });
 
   it('should unset a property on $attributes', function() {
-    tempModel = new BangularModel({
+    tempModel = new NgBackboneModel({
       foo: 'bar'
     });
 
@@ -67,7 +67,7 @@ describe('BangularModel', function() {
   });
 
   it('should unset a property with removeBinding', function() {
-    tempModel = new BangularModel({
+    tempModel = new NgBackboneModel({
       foo: 'bar'
     });
 
@@ -80,7 +80,7 @@ describe('BangularModel', function() {
     var model, $httpBackend;
 
     beforeEach(inject(function(_$httpBackend_) {
-      model = new BangularModel();
+      model = new NgBackboneModel();
 
       $httpBackend = _$httpBackend_;
     }));
@@ -154,7 +154,7 @@ describe('BangularModel', function() {
       it('should set on PUT request', function() {
         $httpBackend.when('PUT', '/put').respond({});
 
-        model = new BangularModel({
+        model = new NgBackboneModel({
           id: 'test-123'
         });
 
@@ -180,7 +180,7 @@ describe('BangularModel', function() {
       it('should set on DELETE request', function() {
         $httpBackend.when('DELETE', '/delete').respond({});
 
-        model = new BangularModel({
+        model = new NgBackboneModel({
           id: 'test-123'
         });
 

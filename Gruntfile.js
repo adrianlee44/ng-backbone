@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           _: true
         }
       },
-      bangular: ['bangular.js'],
+      ngBackbone: ['ng-backbone.js'],
       test: {
         options: {
           strict: false,
@@ -53,9 +53,9 @@ module.exports = function(grunt) {
       }
     },
     chalkboard: {
-      bangular: {
+      ngBackbone: {
         files: [
-          {'README.md':  ['bangular.js']}
+          {'README.md':  ['ng-backbone.js']}
         ]
       }
     }
