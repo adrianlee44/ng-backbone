@@ -58,11 +58,23 @@ module.exports = function(grunt) {
           {'README.md':  ['ng-backbone.js']}
         ]
       }
+    },
+    uglify: {
+      ngBackbone: {
+        options: {
+          sourceMap: true,
+          sourceMapName: 'ng-backbone.map'
+        },
+        files: {
+          'ng-backbone.min.js': ['ng-backbone.js']
+        }
+      }
     }
   });
 
   grunt.registerTask('default', [
     'chalkboard',
-    'karma:ci'
+    'karma:ci',
+    'uglify'
   ]);
 };
