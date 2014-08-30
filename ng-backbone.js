@@ -367,6 +367,9 @@
 
           this.on('sync error', this.$resetStatus);
 
+          // For clearing status when destroy model on collection
+          this.on('destroy', this.$resetStatus);
+
           Object.defineProperty(this, '$models', {
             enumerable: true,
             get: function() {

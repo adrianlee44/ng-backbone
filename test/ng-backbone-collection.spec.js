@@ -163,20 +163,42 @@ describe('NgBackboneCollection', function() {
     });
 
     describe('deleting should be updated', function() {
-      it('should set when a model on collection is destroyed', function() {
-        var model = new collection.model({id: 'test-123'});
+      var model;
+
+      beforeEach(function(){
+        model = new collection.model({id: 'test-123'});
 
         collection.url = '/collection';
 
         collection.add(model);
 
         $httpBackend.when('DELETE', '/collection/test-123').respond({});
+      });
 
-        model.destroy();
+      it('should set when a model on collection is getting destroyed', function() {
+        model.destroy({wait: true});
 
         expect(collection.$status.deleting).toBe(true);
 
         $httpBackend.flush();
+      });
+
+      it('should clear status when destroying without wait', function() {
+        model.destroy();
+
+        $httpBackend.flush();
+
+        expect(collection.$status.deleting).toBe(false);
+        expect(collection.$status.loading).toBe(false);
+      });
+
+      it('should clear status when DELETE request complete', function() {
+        model.destroy({wait: true});
+
+        $httpBackend.flush();
+
+        expect(collection.$status.deleting).toBe(false);
+        expect(collection.$status.loading).toBe(false);
       });
     });
   });
