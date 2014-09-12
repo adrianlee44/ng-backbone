@@ -156,7 +156,22 @@ describe('Backbone', function() {
     });
 
     $httpBackend.flush();
+  });
 
+  it('should not add querystring on read with post', function() {
+    $httpBackend.expectPOST('/test', {
+      hello: 'world'
+    }).respond(200, {});
+
+    Backbone.sync('read', tempModel, {
+      url: '/test',
+      method: 'POST',
+      data: {
+        hello: 'world'
+      }
+    });
+
+    $httpBackend.flush();
   });
 
   it('should stingify attributes on create', function() {
