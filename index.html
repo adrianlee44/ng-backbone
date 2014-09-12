@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>ng-backbone</title>
+        <meta name="description" content="Backbone data model and collection for AngularJS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+        <link href="prettify.css" type="text/css" rel="stylesheet" />
+
+        <style type="text/css">
+          body {background: #ECF0F1; color: #333;}
+          .container, .jumbotron {background-color: #fff;}
+          .jumbotron {margin-bottom: 0px; border-radius: 0px;}
+          .footer {padding: 60px 0px 40px 0px;}
+        </style>
+
+    </head>
+    <body class="container" onload="prettyPrint()">
+
+        <div class="jumbotron">
+            <h1>ng-backbone</h1>
+            <p>Take advantage of Backbone Model and Collection in AngularJS</p>
+
+            <iframe src="http://ghbtns.com/github-btn.html?user=adrianlee44&repo=ng-backbone&type=watch&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+            <iframe src="http://ghbtns.com/github-btn.html?user=adrianlee44&repo=ng-backbone&type=fork&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+
+            <div class="pull-right">
+                <a class="btn btn-default" href="https://github.com/adrianlee44/ng-backbone">
+                    <i class="fa fa-github-alt"></i>
+                    View on Github
+                </a>
+                <a class="btn btn-success" href="http://bower.io/search/?q=ng-backbone">
+                    <i class="fa fa-cloud"></i>
+                    Check it out on Bower
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <h3>What is ng-backbone?</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <h3>Why use ng-backbone?</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <h3>How to use this</h3>
+                <ol>
+                    <li>
+                        Download ng-backbone from <a href="https://github.com/adrianlee44/ng-backbone/releases/latest">Github</a> directly or <a href="http://bower.io">Bower</a>:
+                        <pre class="prettyprint lang-bash">bower install ng-backbone</pre>
+                    </li>
+                    <li>
+                        Add <code>NgBackbone</code> module to your AngularJS application
+                        <pre class="prettyprint lang-js">angular.module('MyApp', ['NgBackbone']);</pre>
+                    </li>
+                    <li>
+                        Create custom model and collection by extending <code>NgBackboneModel</code> and <code>NgBackboneCollection</code>
+                        <pre class="prettyprint lang-js">var Sample = NgBackboneModel.extend({});</pre>
+                        <pre class="prettyprint lang-js">var SampleCollection = NgBackboneCollection.extend({});</pre>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <h3>More Information</h3>
+                <ul>
+                    <li>Check out the <a href="https://github.com/adrianlee44/ng-backbone/blob/master/README.md">README</a></li>
+                    <li>Browse through the <a href="https://github.com/adrianlee44/ng-backbone/wiki">Wiki</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row footer">
+            <div class="col-xs-12 col-md-10 col-md-offset-1 text-center">
+                <p>ng-backbone is built by <a href="https://twitter.com/adrianthemole">adrianthemole</a> and <a href="https://twitter.com/chemoish">chemoish</a></p>
+                <ul class="list-inline">
+                    <li><a href="https://github.com/adrianlee44/ng-backbone">ng-backbone</a></li>
+                    <li>·</li>
+                    <li><a href="https://github.com/adrianlee44/ng-backbone/issues?state=open">Issues</a></li>
+                    <li>·</li>
+                    <li><a href="https://github.com/adrianlee44/ng-backbone/wiki">Wiki</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+    </body>
+</html>
