@@ -1,7 +1,7 @@
-describe('Backbone', function() {
+describe('Backbone', function () {
   var Backbone, $httpBackend, tempModel;
 
-  beforeEach(function() {
+  beforeEach(function () {
     module('ngBackbone');
 
     inject(function(_$httpBackend_, _Backbone_) {
@@ -12,18 +12,18 @@ describe('Backbone', function() {
     tempModel = new Backbone.Model();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should override Backbone.ajax with $http', function() {
+  it('should override Backbone.ajax with $http', function () {
     var ajaxDefinition = Backbone.ajax.toString();
     expect(ajaxDefinition.indexOf('$http')).not.toBe(-1);
   });
 
-  describe('callbacks', function(){
-    it('should call success', function() {
+  describe('callbacks', function () {
+    it('should call success', function () {
       var success = jasmine.createSpy('success');
 
       $httpBackend.when('GET', '/test').respond(200, {});
@@ -38,7 +38,7 @@ describe('Backbone', function() {
       expect(success).toHaveBeenCalled();
     });
 
-    it('should call return data on success', function() {
+    it('should call return data on success', function () {
       var success = function(data) {
         expect(data.message).toBe('success');
       };
@@ -53,7 +53,7 @@ describe('Backbone', function() {
       $httpBackend.flush();
     });
 
-    it('should call error', function() {
+    it('should call error', function () {
       var error = jasmine.createSpy('error');
 
       $httpBackend.when('GET', '/test').respond(400, {});
@@ -68,7 +68,7 @@ describe('Backbone', function() {
       expect(error).toHaveBeenCalled();
     });
 
-    it('should call return data on error', function() {
+    it('should call return data on error', function () {
       var error = function(data) {
         expect(data.message).toBe('test is broken');
       };
@@ -84,7 +84,7 @@ describe('Backbone', function() {
     });
   });
 
-  it('should make a GET request', function() {
+  it('should make a GET request', function () {
     $httpBackend.expectGET('/test').respond(200, {});
 
     Backbone.sync('read', tempModel, {
@@ -94,7 +94,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should make a POST request', function() {
+  it('should make a POST request', function () {
     $httpBackend.expectPOST('/test').respond(200, {});
 
     Backbone.sync('create', tempModel, {
@@ -104,7 +104,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should make a POST request using fetch with options override', function() {
+  it('should make a POST request using fetch with options override', function () {
     $httpBackend.expectPOST('/test').respond(200, {});
 
     Backbone.sync('create', tempModel, {
@@ -115,7 +115,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should make a DELETE request', function() {
+  it('should make a DELETE request', function () {
     $httpBackend.expectDELETE('/test').respond(200, {});
 
     Backbone.sync('delete', tempModel, {
@@ -125,7 +125,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should make a PATCH request', function() {
+  it('should make a PATCH request', function () {
     $httpBackend.expectPATCH('/test').respond(200, {});
 
     Backbone.sync('patch', tempModel, {
@@ -135,7 +135,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should make a update request', function() {
+  it('should make a update request', function () {
     $httpBackend.expectPUT('/test').respond(200, {});
 
     Backbone.sync('update', tempModel, {
@@ -145,7 +145,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should add querystring on read', function() {
+  it('should add querystring on read', function () {
     $httpBackend.expectGET('/test?hello=world').respond(200, {});
 
     Backbone.sync('read', tempModel, {
@@ -156,10 +156,25 @@ describe('Backbone', function() {
     });
 
     $httpBackend.flush();
-
   });
 
-  it('should stingify attributes on create', function() {
+  it('should not add querystring on read with post', function () {
+    $httpBackend.expectPOST('/test', {
+      hello: 'world'
+    }).respond(200, {});
+
+    Backbone.sync('read', tempModel, {
+      url: '/test',
+      method: 'POST',
+      data: {
+        hello: 'world'
+      }
+    });
+
+    $httpBackend.flush();
+  });
+
+  it('should stingify attributes on create', function () {
     $httpBackend.expectPOST('/test', '{"hello":"world"}').respond(200, {});
 
 
@@ -174,7 +189,7 @@ describe('Backbone', function() {
 
   });
 
-  it('should stringify with model toJSON method', function() {
+  it('should stringify with model toJSON method', function () {
     $httpBackend.expectPOST('/test', '{"hello":"world"}').respond(200, {});
 
     tempModel.set({hello: 'world'});
@@ -189,7 +204,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should get the url on model', function() {
+  it('should get the url on model', function () {
     tempModel.urlRoot = '/';
     tempModel.set('id', 'test');
 
@@ -200,7 +215,7 @@ describe('Backbone', function() {
     $httpBackend.flush();
   });
 
-  it('should trigger request event', function() {
+  it('should trigger request event', function () {
     var request = jasmine.createSpy('request');
     tempModel.on('request', request);
 

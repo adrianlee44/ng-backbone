@@ -1,25 +1,25 @@
-describe('NgBackboneCollection', function() {
+describe('NgBackboneCollection', function () {
   var NgBackboneCollection, collection;
 
-  beforeEach(function() {
+  beforeEach(function () {
     module('ngBackbone');
 
-    inject(function(_NgBackboneCollection_) {
+    inject(function (_NgBackboneCollection_) {
       NgBackboneCollection = _NgBackboneCollection_;
     });
 
     collection = new NgBackboneCollection();
   });
 
-  it('should have NgBackboneCollection as the constructor name', function(){
+  it('should have NgBackboneCollection as the constructor name', function () {
     expect(collection.constructor.name).toBe('NgBackboneCollection');
   });
 
-  it('should create $models object', function() {
+  it('should create $models object', function () {
     expect(collection.$models).toBeDefined();
   });
 
-  it('should be the same array as models', function() {
+  it('should be the same array as models', function () {
     var model;
 
     expect(collection.$models.length).toBe(0);
@@ -32,26 +32,26 @@ describe('NgBackboneCollection', function() {
     expect(collection.$models[0]).toBe(model);
   });
 
-  describe('$status', function() {
+  describe('$status', function () {
     var $httpBackend;
 
-    beforeEach(inject(function(_$httpBackend_){
+    beforeEach(inject(function (_$httpBackend_) {
       $httpBackend = _$httpBackend_;
     }));
 
-    it('should create $status object', function() {
+    it('should create $status object', function () {
       expect(collection.$status).toBeDefined();
     });
 
-    it('should default all status to false', function() {
+    it('should default all status to false', function () {
       expect(collection.$status.deleting).toBe(false);
       expect(collection.$status.loading).toBe(false);
       expect(collection.$status.saving).toBe(false);
       expect(collection.$status.syncing).toBe(false);
     });
 
-    describe('syncing sould be updated', function(){
-      it('should set on GET request', function() {
+    describe('syncing sould be updated', function () {
+      it('should set on GET request', function () {
         $httpBackend.when('GET', '/get').respond({});
 
         collection.fetch({url: '/get'});
@@ -61,7 +61,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should set on POST request', function() {
+      it('should set on POST request', function () {
         $httpBackend.when('POST', '/post').respond({});
 
         collection.create({hello: 'world'}, {url: '/post'});
@@ -71,7 +71,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should set when a model on the collection fetches', function() {
+      it('should set when a model on the collection fetches', function () {
         var model = new collection.model();
 
         collection.add(model);
@@ -85,7 +85,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should set when a model on the collection POST', function() {
+      it('should set when a model on the collection POST', function () {
         var model = new collection.model();
 
         collection.url = '/post';
@@ -102,8 +102,8 @@ describe('NgBackboneCollection', function() {
       });
     });
 
-    describe('loading should be updated', function() {
-      it('should set on GET request', function() {
+    describe('loading should be updated', function () {
+      it('should set on GET request', function () {
         $httpBackend.when('GET', '/get').respond({});
 
         collection.fetch({url: '/get'});
@@ -113,7 +113,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should not set on POST request', function() {
+      it('should not set on POST request', function () {
         $httpBackend.when('POST', '/post').respond({});
 
         collection.create({}, {url: '/post'});
@@ -124,8 +124,8 @@ describe('NgBackboneCollection', function() {
       });
     });
 
-    describe('saving should be updated', function() {
-      it('should set on POST request', function() {
+    describe('saving should be updated', function () {
+      it('should set on POST request', function () {
         $httpBackend.when('POST', '/post').respond({});
 
         collection.create({}, {url: '/post'});
@@ -135,7 +135,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should not set on GET request', function() {
+      it('should not set on GET request', function () {
         $httpBackend.when('GET', '/get').respond({});
 
         collection.fetch({url: '/get'});
@@ -145,7 +145,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should set when a model on collection is saving', function(){
+      it('should set when a model on collection is saving', function () {
         var model = new collection.model({id: 'test-123'});
 
         collection.url = '/put';
@@ -162,10 +162,10 @@ describe('NgBackboneCollection', function() {
       });
     });
 
-    describe('deleting should be updated', function() {
+    describe('deleting should be updated', function () {
       var model;
 
-      beforeEach(function(){
+      beforeEach(function () {
         model = new collection.model({id: 'test-123'});
 
         collection.url = '/collection';
@@ -175,7 +175,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.when('DELETE', '/collection/test-123').respond({});
       });
 
-      it('should set when a model on collection is getting destroyed', function() {
+      it('should set when a model on collection is getting destroyed', function () {
         model.destroy({wait: true});
 
         expect(collection.$status.deleting).toBe(true);
@@ -183,7 +183,7 @@ describe('NgBackboneCollection', function() {
         $httpBackend.flush();
       });
 
-      it('should clear status when destroying without wait', function() {
+      it('should clear status when destroying without wait', function () {
         model.destroy();
 
         $httpBackend.flush();
@@ -192,7 +192,7 @@ describe('NgBackboneCollection', function() {
         expect(collection.$status.loading).toBe(false);
       });
 
-      it('should clear status when DELETE request complete', function() {
+      it('should clear status when DELETE request complete', function () {
         model.destroy({wait: true});
 
         $httpBackend.flush();
