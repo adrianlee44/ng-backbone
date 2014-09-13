@@ -12,10 +12,10 @@
         <link href="prettify.css" type="text/css" rel="stylesheet" />
 
         <style type="text/css">
-          body {background: #ECF0F1; color: #333;}
-          .container, .jumbotron {background-color: #fff;}
-          .jumbotron {margin-bottom: 0px; border-radius: 0px;}
-          .footer {padding: 60px 0px 40px 0px;}
+        body {background: #ECF0F1; color: #333;}
+        .container, .jumbotron {background-color: #fff;}
+        .jumbotron {margin-bottom: 0px; border-radius: 0px;}
+        .footer {padding: 60px 0px 40px 0px;}
         </style>
 
     </head>
@@ -45,12 +45,34 @@
         <div class="row">
             <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <h3>What is ng-backbone?</h3>
+                <p>
+                    ng-backbone, at it's core, is nothing more than a thin layer that allows Backbone Models and Collections to be picked up by AngularJS' digest cycle. This can easily be done because both Backbone and AngularJS use jQuery's ajax method. This makes the integration really simple.
+                </p>
+                <p>
+                    Replace <code>Backbone.$.ajax</code> with <code>$http</code> and your essentially done. See <a href="http://backbonejs.org/docs/backbone.html#section-154" target="_blank">http://backbonejs.org/docs/backbone.html#section-154</a> for more information.
+                </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <h3>Why use ng-backbone?</h3>
+                <p>
+                    When you need more control over your Model layer. Simple right?
+                </p>
+                <p>
+                    As we developed enterprise level appplications, we saw the need to have a more organized structure than what AngularJS provided. Backbone's integration allows for the encapsulation of api integration and business logic, that is more extensive than the simple <code>$http</code> request, without being overkill.
+                </p>
+
+                <h4>Features:</h4>
+                <ul>
+                    <li>
+                        Utilize all existing AngularJS functionality (e.g. ng-repeat, filtering, etc).
+                    </li>
+                    <li>
+                        Tap into a model or collection's status (e.g. loading, deleting, saving, or syncing).
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -63,13 +85,14 @@
                         <pre class="prettyprint lang-bash">bower install ng-backbone</pre>
                     </li>
                     <li>
-                        Add <code>NgBackbone</code> module to your AngularJS application
-                        <pre class="prettyprint lang-js">angular.module('MyApp', ['NgBackbone']);</pre>
+                        Add <code>ngBackbone</code> module to your AngularJS application
+                        <pre class="prettyprint lang-js">angular.module('MyApp', ['ngBackbone']);</pre>
                     </li>
                     <li>
                         Create custom model and collection by extending <code>NgBackboneModel</code> and <code>NgBackboneCollection</code>
                         <pre class="prettyprint lang-js">var Sample = NgBackboneModel.extend({});</pre>
                         <pre class="prettyprint lang-js">var SampleCollection = NgBackboneCollection.extend({});</pre>
+                    </li>
                 </ol>
             </div>
         </div>
