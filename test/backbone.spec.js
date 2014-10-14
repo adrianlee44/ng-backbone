@@ -82,6 +82,21 @@ describe('Backbone', function () {
 
       $httpBackend.flush();
     });
+
+    it('should set xhr params on options', function () {
+      $httpBackend.when('GET', '/test').respond(400, {message: 'test is broken'});
+
+      var options = {
+        url: '/test',
+        error: angular.noop
+      };
+
+      Backbone.sync('read', tempModel, options);
+
+      $httpBackend.flush();
+
+      expect(options.xhr.status).toBe(400);
+    });
   });
 
   it('should make a GET request', function () {
