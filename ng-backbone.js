@@ -57,13 +57,25 @@
           params.params = options.data;
         }
 
-        var xhr = options.xhr = ajax(_.extend(params, options)).
-          success(function(data) {
+        var xhr = ajax(_.extend(params, options)).
+          success(function(data, status, headers, config) {
+            options.xhr = {
+              status: status,
+              headers: headers,
+              config: config
+            };
+
             if (!isUndefined(options.success) && _.isFunction(options.success)) {
               options.success(data);
             }
           }).
-          error(function(data) {
+          error(function(data, status, headers, config) {
+            options.xhr = {
+              status: status,
+              headers: headers,
+              config: config
+            };
+
             if (!isUndefined(options.error) && _.isFunction(options.error)) {
               options.error(data);
             }
