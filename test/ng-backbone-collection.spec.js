@@ -210,21 +210,21 @@ describe('NgBackboneCollection', function () {
       $httpBackend = _$httpBackend_;
     }));
 
-    it('Should expose xhr params on the options argument', function (done) {
+    it('should expose xhr params on the options argument', function (done) {
       $httpBackend.when('GET', '/get').respond(400);
 
-      error = function (collection, response, options) {
+      var error = function (collection, response, options) {
         expect(options.xhr.status).toBe(400);
 
-        done()
-      }
+        done();
+      };
 
       collection.fetch({
         url: '/get',
         error: error
       });
 
-      $httpBackend.flush()
+      $httpBackend.flush();
     });
   });
 });
