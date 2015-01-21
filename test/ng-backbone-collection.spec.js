@@ -202,4 +202,29 @@ describe('NgBackboneCollection', function () {
       });
     });
   });
+
+  describe('callbacks', function () {
+    var $httpBackend;
+
+    beforeEach(inject(function (_$httpBackend_) {
+      $httpBackend = _$httpBackend_;
+    }));
+
+    it('should expose xhr params on the options argument', function (done) {
+      $httpBackend.when('GET', '/get').respond(400);
+
+      var error = function (collection, response, options) {
+        expect(options.xhr.status).toBe(400);
+
+        done();
+      };
+
+      collection.fetch({
+        url: '/get',
+        error: error
+      });
+
+      $httpBackend.flush();
+    });
+  });
 });
