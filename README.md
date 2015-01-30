@@ -5,7 +5,7 @@ ng-backbone
   
   [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat)](https://travis-ci.org/adrianlee44/ng-backbone)  
   
-Version: `0.1.0`  
+Version: `0.1.1`  
 
 ### Dependencies
   - [AngualrJS](https://angularjs.org)  

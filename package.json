@@ -1,6 +1,6 @@
 {
   "name": "ng-backbone",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Backbone data model and collection for AngularJS",
   "main": "ng-backbone.js",
   "scripts": {
