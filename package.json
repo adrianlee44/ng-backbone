@@ -4,7 +4,7 @@
   "description": "Backbone data model and collection for AngularJS",
   "main": "ng-backbone.js",
   "scripts": {
-    "test": "grunt karma:ci"
+    "test": "./node_modules/.bin/grunt karma:ci"
   },
   "repository": {
     "type": "git",
