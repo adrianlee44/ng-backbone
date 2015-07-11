@@ -3,7 +3,7 @@
   @name ng-backbone
   @version 0.1.1
   @author [@adrianthemole](http://twitter.com/adrianthemole)
-  @license MIT
+  @license Code licensed under [The MIT License](https://github.com/adrianlee44/ng-backbone/blob/master/LICENSE.md).
   @dependencies
   - [AngualrJS](https://angularjs.org)
   - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
