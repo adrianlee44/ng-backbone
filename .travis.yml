@@ -1,7 +1,7 @@
 language: node_js
 sudo: false
 node_js:
-  - 0.10
+  - 6
 env:
   - ANGULAR_VERSION=1.2
   - ANGULAR_VERSION=1.3
