@@ -46,7 +46,8 @@ module.exports = function(grunt) {
             inject: true,
             it: true,
             jasmine: true,
-            module: true
+            module: true,
+            angular: true
           }
         },
         src: ['test/*.spec.js']
@@ -72,6 +73,10 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('test', [
+    "jshint",
+    "karma:ci"
+  ]);
   grunt.registerTask('default', [
     'chalkboard',
     'karma:ci',
