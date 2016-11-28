@@ -1,29 +1,25 @@
-/*
-  @chalk
-  @name ng-backbone
-  @version 0.1.1
-  @author [@adrianthemole](http://twitter.com/adrianthemole)
-  @license Code licensed under [The MIT License](https://github.com/adrianlee44/ng-backbone/blob/master/LICENSE.md).
-  @dependencies
-  - [AngualrJS](https://angularjs.org)
-  - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
-  - [BackboneJS](http://backbonejs.org)
-  @description
-  Backbone data model and collection for AngularJS
-
-  [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat)](https://travis-ci.org/adrianlee44/ng-backbone)
-*/
+/**
+ * @name ng-backbone
+ * @version 0.1.1
+ * @author [@adrianthemole](http://twitter.com/adrianthemole)
+ * @license Code licensed under [The MIT License](https://github.com/adrianlee44/ng-backbone/blob/master/LICENSE.md).
+ * @dependencies
+ * - [AngualrJS](https://angularjs.org)
+ * - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
+ * - [BackboneJS](http://backbonejs.org)
+ * @description
+ * Backbone data model and collection for AngularJS
+ */
 
 (function(window, document, undefined) {
   'use strict';
 
   angular.module('ngBackbone', []).
-    /*
-      @chalk
-      @name Backbone factory
-      @description
-      To make Backbone work properly with AngularJS, ng-backbone overrides Backbone's sync and ajax methods.
-    */
+    /**
+     * @name Backbone factory
+     * @description
+     * To make Backbone work properly with AngularJS, ng-backbone overrides Backbone's sync and ajax methods.
+     */
     factory('Backbone', ['$http', function($http) {
       var methodMap, sync, ajax, isUndefined = _.isUndefined;
 
@@ -86,13 +82,12 @@
         return xhr;
       };
 
-      /*
-        @chalk
-        @private
-        @name ajax
-        @description
-        Making ajax request
-      */
+      /**
+       * @private
+       * @name ajax
+       * @description
+       * Making ajax request
+       */
       ajax = function() {
         return $http.apply($http, arguments);
       };
@@ -103,60 +98,59 @@
       });
     }]).
 
-    /*
-      @chalk
-      @name NgBackboneModel
-      @description
-      Base NgBackbone model extends Backbone.model by adding additional properties and functions, including `$attributes` and `$status`. When overriding NgBackboneModel `set` method but you would like to keep `$attributes`, you'll have to explicitly call NgBackboneModel set:
-      ```javascript
-      var Sample = NgBackboneModel.extend({
-        set: function(key, val, options) {
-          NgBackboneModel.prototype.set.apply(this, arguments);
-        }
-      });
-      ```
-
-      In rare cases when you want to override the constructor which allows you to replace the actual constructor function for your model, you should invoke NgBackboneModel constructor in the end.
-      ```javascript
-      var Sample = NgBackboneModel.extend({
-        constructor: function() {
-          this.text = 'Sample!';
-          NgBackboneModel.apply(this, arguments);
-        }
-      });
-      ```
-
-      The `$attributes` property allows application to use AngularJS two-way binding to manipulate Backbone objects using Backbone `get` and `set`.
-      HTML:
-      ```html
-      <input type="text" ng-model="person.$attributes.name">
-      ```
-
-      Javascript:
-      ```javascript
-      $scope.person = new Person({
-        name: 'John'
-      });
-      ```
-
-      The `$status` property is the hash containing model sync state. Since `$status` updates using Backbone event, passing `{silent: true}` will prevent `$status` from updating. `$status` contains four properties, including:
-      - `deleting`: Set to true when invoking `destroy` method on model (HTTP `DELETE` request)
-      - `loading`:  Set to true when fetching model data from server (HTTP `GET` request)
-      - `saving`:   Set to true when creating or updating model (HTTP `POST` or `PUT` request)
-      - `syncing`:  Set to true whenever a model has started a request to the server
-
-      HTML:
-      ```html
-      <span ng-if="user.$status.loading">Loading</span>
-      <label>{{user.name}}</label>
-      ```
-
-      Javascript:
-      ```javascript
-      $scope.user = new User({id: '123'});
-      $scope.user.fetch();
-      ```
-    */
+    /**
+     * @name NgBackboneModel
+     * @description
+     * Base NgBackbone model extends Backbone.model by adding additional properties and functions, including `$attributes` and `$status`. When overriding NgBackboneModel `set` method but you would like to keep `$attributes`, you'll have to explicitly call NgBackboneModel set:
+     * ```javascript
+     * var Sample = NgBackboneModel.extend({
+     *   set: function(key, val, options) {
+     *     NgBackboneModel.prototype.set.apply(this, arguments);
+     *   }
+     * });
+     * ```
+     *
+     * In rare cases when you want to override the constructor which allows you to replace the actual constructor function for your model, you should invoke NgBackboneModel constructor in the end.
+     * ```javascript
+     * var Sample = NgBackboneModel.extend({
+     *   constructor: function() {
+     *     this.text = 'Sample!';
+     *     NgBackboneModel.apply(this, arguments);
+     *   }
+     * });
+     * ```
+     *
+     * The `$attributes` property allows application to use AngularJS two-way binding to manipulate Backbone objects using Backbone `get` and `set`.
+     * HTML:
+     * ```html
+     * <input type="text" ng-model="person.$attributes.name">
+     * ```
+     *
+     * Javascript:
+     * ```javascript
+     * $scope.person = new Person({
+     *   name: 'John'
+     * });
+     * ```
+     *
+     * The `$status` property is the hash containing model sync state. Since `$status` updates using Backbone event, passing `{silent: true}` will prevent `$status` from updating. `$status` contains four properties, including:
+     * - `deleting`: Set to true when invoking `destroy` method on model (HTTP `DELETE` request)
+     * - `loading`:  Set to true when fetching model data from server (HTTP `GET` request)
+     * - `saving`:   Set to true when creating or updating model (HTTP `POST` or `PUT` request)
+     * - `syncing`:  Set to true whenever a model has started a request to the server
+     *
+     * HTML:
+     * ```html
+     * <span ng-if="user.$status.loading">Loading</span>
+     * <label>{{user.name}}</label>
+     * ```
+     *
+     * Javascript:
+     * ```javascript
+     * $scope.user = new User({id: '123'});
+     * $scope.user.fetch();
+     * ```
+     */
     factory('NgBackboneModel', ['$rootScope', 'Backbone', function($rootScope, Backbone) {
       var defineProperty;
 
@@ -208,12 +202,11 @@
           return output;
         },
 
-        /*
-          @chalk
-          @name $resetStatus
-          @description
-          Reset all properties on `$status` including `deleting`, `loading`, `saving`, and `syncing` back to false
-        */
+        /**
+         * @name $resetStatus
+         * @description
+         * Reset all properties on `$status` including `deleting`, `loading`, `saving`, and `syncing` back to false
+         */
         $resetStatus: function() {
           return this.$setStatus({
             deleting: false,
@@ -223,13 +216,12 @@
           });
         },
 
-        /*
-          @chalk
-          @private
-          @name setBinding
-          @description
-          Add binding on `$attributes` to a key on `attributes`
-        */
+        /**
+         * @private
+         * @name setBinding
+         * @description
+         * Add binding on `$attributes` to a key on `attributes`
+         */
         $setBinding: function(key, val, options) {
           var attr, attrs, unset;
 
@@ -263,15 +255,14 @@
           return this;
         },
 
-        /*
-          @chalk
-          @name $setStatus
-          @description
-          Update model status on `$status`
-
-          @param {Object} attributes Set one or multiple statuses
-          @param {Object} options Options
-        */
+        /**
+         * @name $setStatus
+         * @description
+         * Update model status on `$status`
+         *
+         * @param {Object} attributes Set one or multiple statuses
+         * @param {Object} options Options
+         */
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
@@ -301,58 +292,56 @@
       });
     }]).
 
-    /*
-      @chalk
-      @name NgBackboneCollection
-      @description
-      Base NgBackbone collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`.
+    /**
+     * @name NgBackboneCollection
+     * @description
+     * Base NgBackbone collection extends Backbone.collection by adding additonal properties and functions, such as `$models` and `$status`.
 
-      Similar to NgBackboneModel, in rare cases where you may want to override the constructor, you should invoke NgBackboneCollection in the end.
-      ```javascript
-      var SampleCollection = NgBackboneCollection.extend({
-        constructor: function(models, options) {
-          this.allSamples = false;
-
-          NgBackboneCollection.apply(this, arguments);
-        }
-      });
-      ```
-
-      The `$models` property creates a one-way binding to collection `models` which is the Javascript array of models. Application can only access the array with `$models` but will not be able to modify it.
-      HTML:
-      ```html
-      <ul>
-        <li ng-repeat="user in users.$models">{{user.username}}<li>
-      </ul>
-      ```
-
-      Javascript:
-      ```
-      $scope.users = new Users();
-      $scope.users.fetch();
-      ```
-
-      The `$status` property is the hash containing collection and its models sync state. Since `$status` updates using Backbone event, passing `{silent: true}` will prevent `$status` from updating. `$status` contains four properties, including:
-      - `deleting`: Set to true when one of its models is getting destroyed (HTTP `DELETE` request)
-      - `loading`:  Set to true when fetching collection data from server (HTTP `GET` request)
-      - `saving`:   Set to true when creating or updating one of its models (HTTP `POST` or `PUT` request)
-      - `syncing`:  Set to true whenever a collection has started a request to the server
-
-      HTML:
-      ```html
-      <ul>
-        <li ng-if="users.$status.loading">Loading...</li>
-        <li ng-repeat="user in users.$models">{{user.username}}<li>
-      </ul>
-      ```
-
-      Javascript:
-      ```
-      $scope.users = new Users();
-      $scope.users.fetch();
-      ```
-
-    */
+     * Similar to NgBackboneModel, in rare cases where you may want to override the constructor, you should invoke NgBackboneCollection in the end.
+     * ```javascript
+     * var SampleCollection = NgBackboneCollection.extend({
+     *   constructor: function(models, options) {
+     *     this.allSamples = false;
+     *
+     *     NgBackboneCollection.apply(this, arguments);
+     *   }
+     * });
+     * ```
+     *
+     * The `$models` property creates a one-way binding to collection `models` which is the Javascript array of models. Application can only access the array with `$models` but will not be able to modify it.
+     * HTML:
+     * ```html
+     * <ul>
+     *   <li ng-repeat="user in users.$models">{{user.username}}<li>
+     * </ul>
+     * ```
+     *
+     * Javascript:
+     * ```
+     * $scope.users = new Users();
+     * $scope.users.fetch();
+     * ```
+     *
+     * The `$status` property is the hash containing collection and its models sync state. Since `$status` updates using Backbone event, passing `{silent: true}` will prevent `$status` from updating. `$status` contains four properties, including:
+     * - `deleting`: Set to true when one of its models is getting destroyed (HTTP `DELETE` request)
+     * - `loading`:  Set to true when fetching collection data from server (HTTP `GET` request)
+     * - `saving`:   Set to true when creating or updating one of its models (HTTP `POST` or `PUT` request)
+     * - `syncing`:  Set to true whenever a collection has started a request to the server
+     *
+     * HTML:
+     * ```html
+     * <ul>
+     *   <li ng-if="users.$status.loading">Loading...</li>
+     *   <li ng-repeat="user in users.$models">{{user.username}}<li>
+     * </ul>
+     * ```
+     *
+     * Javascript:
+     * ```
+     * $scope.users = new Users();
+     * $scope.users.fetch();
+     * ```
+     */
     factory('NgBackboneCollection', ['Backbone', 'NgBackboneModel', function(Backbone, NgBackboneModel) {
       return Backbone.Collection.extend({
         model: NgBackboneModel,
@@ -392,16 +381,14 @@
           Backbone.Collection.apply(this, arguments);
         },
 
-        /*
-          @chalk
-          @name $setStatus
-          @function
-          @description
-          Update collection status
-
-          @param {Object} attributes Set on or multiple statuses
-          @param {Object} options    Options
-        */
+        /**
+         * @name $setStatus
+         * @description
+         * Update collection status
+         *
+         * @param {Object} attributes Set on or multiple statuses
+         * @param {Object} options    Options
+         */
         $setStatus: function(key, value, options) {
           var attr, attrs;
 
@@ -425,13 +412,11 @@
           }
         },
 
-        /*
-          @chalk
-          @name $resetStatus
-          @function
-          @description
-          Reset all statuses including `deleting`, `loading`, `saving`, and `syncing` back to false
-        */
+        /**
+         * @name $resetStatus
+         * @description
+         * Reset all statuses including `deleting`, `loading`, `saving`, and `syncing` back to false
+         */
         $resetStatus: function() {
           return this.$setStatus({
             deleting: false,
