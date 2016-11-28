@@ -3,9 +3,10 @@ ng-backbone
 ===
   Backbone data model and collection for AngularJS  
 
-  [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat)](https://travis-ci.org/adrianlee44/ng-backbone)  
-
-Version: `0.1.1`  
+  [![GitHub release](https://img.shields.io/github/release/adrianlee44/ng-backbone.svg?style=flat-square)]()
+  [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat-square)](https://travis-ci.org/adrianlee44/ng-backbone)
+  [![David](https://img.shields.io/david/adrianlee44/ng-backbone.svg?style=flat-square)]()
+  [![David](https://img.shields.io/david/dev/adrianlee44/ng-backbone.svg?style=flat-square)]()
 
 ### Dependencies
   - [AngualrJS](https://angularjs.org)  
