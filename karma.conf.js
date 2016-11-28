@@ -3,14 +3,14 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/underscore/underscore.js',
-      'bower_components/backbone/backbone.js',
+      'node_modules/angular/angular.js',
+      'node_modules/underscore/underscore.js',
+      'node_modules/backbone/backbone.js',
       'ng-backbone.js',
-      'bower_components/angular-mocks/angular-mocks.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'test/*.spec.js'
     ],
-    reports: ['progress'],
+    reporters: ['dots'],
     browsers: ['PhantomJS']
   });
 };
