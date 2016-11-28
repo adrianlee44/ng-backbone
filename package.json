@@ -16,6 +16,10 @@
     "url": "https://github.com/adrianlee44/ng-backbone/issues"
   },
   "homepage": "https://github.com/adrianlee44/ng-backbone",
+  "dependencies": {
+    "angular": ">1.2.0",
+    "backbone": ">1.1.2"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-chalkboard": "~0.3.0",
