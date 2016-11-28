@@ -53,13 +53,6 @@ module.exports = function(grunt) {
         src: ['test/*.spec.js']
       }
     },
-    chalkboard: {
-      ngBackbone: {
-        files: [
-          {'README.md':  ['ng-backbone.js']}
-        ]
-      }
-    },
     uglify: {
       ngBackbone: {
         options: {
@@ -78,7 +71,6 @@ module.exports = function(grunt) {
     "karma:ci"
   ]);
   grunt.registerTask('default', [
-    'chalkboard',
     'karma:ci',
     'uglify'
   ]);
