@@ -10,7 +10,15 @@ module.exports = function(config) {
       'node_modules/angular-mocks/angular-mocks.js',
       'test/*.spec.js'
     ],
-    reporters: ['dots'],
-    browsers: ['PhantomJS']
+    reporters: ['dots', 'coverage'],
+    preprocessors: {
+      'ng-backbone.js': ['coverage']
+    },
+    browsers: ['PhantomJS'],
+    coverageReporter: {
+      reporters: [
+        { type: 'lcovonly', subdir: '.'}
+      ]
+    }
   });
 };

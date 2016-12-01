@@ -4,7 +4,7 @@
   "description": "Backbone data model and collection for AngularJS",
   "main": "ng-backbone.js",
   "scripts": {
-    "test": "./node_modules/.bin/grunt test"
+    "test": "./node_modules/.bin/grunt test && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -22,12 +22,14 @@
   },
   "devDependencies": {
     "angular-mocks": ">1.2.0",
+    "coveralls": "^2.11.15",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-karma": "^2.0.0",
     "jasmine-core": "^2.5.2",
     "karma": "^1.3.0",
+    "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.2",
     "load-grunt-tasks": "^3.5.2",
