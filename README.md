@@ -5,6 +5,8 @@ ng-backbone
 
   [![GitHub release](https://img.shields.io/github/release/adrianlee44/ng-backbone.svg?style=flat-square)]()
   [![Build Status](http://img.shields.io/travis/adrianlee44/ng-backbone.svg?style=flat-square)](https://travis-ci.org/adrianlee44/ng-backbone)
+  [![Coverage Status](https://img.shields.io/coveralls/adrianlee44/ng-backbone/master.svg?style=flat-square)](https://coveralls.io/github/adrianlee44/ng-backbone?branch=master)
+
   [![David](https://img.shields.io/david/adrianlee44/ng-backbone.svg?style=flat-square)]()
   [![David](https://img.shields.io/david/dev/adrianlee44/ng-backbone.svg?style=flat-square)]()
 
