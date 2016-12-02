@@ -50,6 +50,25 @@ describe('NgBackboneCollection', function () {
       expect(collection.$status.syncing).toBe(false);
     });
 
+    it('should not set status when key is not defined', function() {
+      var output = collection.$setStatus(undefined, true);
+
+      expect(output).toBe(collection);
+      expect(collection.hasOwnProperty(undefined)).toBe(false);
+    });
+
+    it('should set status when key exist', function() {
+      collection.$setStatus('deleting', true);
+
+      expect(collection.$status.deleting).toBe(true);
+    });
+
+    it('should set status when key is invalid', function() {
+      collection.$setStatus('doesNotExist', true);
+
+      expect(collection.$status.hasOwnProperty('doesNotExist')).toBe(false);
+    });
+
     describe('syncing sould be updated', function () {
       it('should set on GET request', function () {
         $httpBackend.when('GET', '/get').respond({});
