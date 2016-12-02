@@ -56,6 +56,23 @@ describe('NgBackboneModel', function() {
     expect(changeFoo).toHaveBeenCalled();
   });
 
+  it('should set a property on $attributes', function() {
+    tempModel = new NgBackboneModel();
+
+    tempModel.set('foo', 'bar');
+
+    expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(true);
+    expect(tempModel.$attributes.foo).toBe('bar');
+  });
+
+  it('should not set a property on $attributes when key is not defined', function() {
+    tempModel = new NgBackboneModel();
+
+    tempModel.set(undefined, 'bar');
+
+    expect(tempModel.$attributes.hasOwnProperty('foo')).toBe(false);
+  });
+
   it('should unset a property on $attributes', function() {
     tempModel = new NgBackboneModel({
       foo: 'bar'
@@ -200,6 +217,25 @@ describe('NgBackboneModel', function() {
 
         $httpBackend.flush();
       });
+    });
+
+    it('should not set status when key is not defined', function() {
+      var output = model.$setStatus(undefined, true);
+
+      expect(output).toBe(model);
+      expect(model.hasOwnProperty(undefined)).toBe(false);
+    });
+
+    it('should set status when key exist', function() {
+      model.$setStatus('deleting', true);
+
+      expect(model.$status.deleting).toBe(true);
+    });
+
+    it('should set status when key is invalid', function() {
+      model.$setStatus('doesNotExist', true);
+
+      expect(model.$status.hasOwnProperty('doesNotExist')).toBe(false);
     });
   });
 });
