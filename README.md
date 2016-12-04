@@ -1,4 +1,3 @@
-
 ng-backbone
 ===
   Backbone data model and collection for AngularJS  
@@ -12,7 +11,7 @@ ng-backbone
 
 ### Dependencies
   - [AngualrJS](https://angularjs.org)  
-  - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)  
+  - [UnderscoreJS](http://underscorejs.org) / [LoDash](http://lodash.com)
   - [BackboneJS](http://backbonejs.org)  
 
 
@@ -176,9 +175,3 @@ $resetStatus
   Reset all statuses including `deleting`, `loading`, `saving`, and `syncing` back to false  
 
 Type: `function`  
-
-## Author
-[@adrianthemole](http://twitter.com/adrianthemole)
-
-## License
-Code licensed under [The MIT License](https://github.com/adrianlee44/ng-backbone/blob/master/LICENSE.md).
