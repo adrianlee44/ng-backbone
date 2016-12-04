@@ -53,29 +53,56 @@
           params.params = options.data;
         }
 
-        var xhr = ajax(_.extend(params, options)).
-          success(function(data, status, headers, config) {
-            options.xhr = {
-              status: status,
-              headers: headers,
-              config: config
-            };
+        var successFn = function(response) {
+          options.xhr = {
+            status: response.status,
+            headers: response.headers,
+            config: response.config
+          };
 
-            if (!isUndefined(options.success) && _.isFunction(options.success)) {
-              options.success(data);
-            }
-          }).
-          error(function(data, status, headers, config) {
-            options.xhr = {
-              status: status,
-              headers: headers,
-              config: config
-            };
+          if (!isUndefined(options.success) && _.isFunction(options.success)) {
+            options.success(response.data);
+          }
+        };
 
-            if (!isUndefined(options.error) && _.isFunction(options.error)) {
-              options.error(data);
-            }
-          });
+        var errorFn = function(response) {
+          options.xhr = {
+            status: response.status,
+            headers: response.headers,
+            config: response.config
+          };
+
+          if (!isUndefined(options.error) && _.isFunction(options.error)) {
+            options.error(response.data);
+          }
+        };
+
+        var xhr = ajax(_.extend(params, options));
+
+        // If $http has a legacy promise
+        if (!isUndefined(xhr.success) && _.isFunction(xhr.success)) {
+          xhr
+            .success(function(data, status, headers, config) {
+              return successFn({
+                data: data,
+                status: status,
+                headers: headers,
+                config: config
+              });
+            })
+            .error(function(data, status, headers, config) {
+              return errorFn({
+                data: data,
+                status: status,
+                headers: headers,
+                config: config
+              });
+            });
+
+        // If $http promise comes with `then`
+        } else {
+          xhr.then(successFn, errorFn);
+        }
 
         model.trigger('request', model, xhr, _.extend(params, options));
 
