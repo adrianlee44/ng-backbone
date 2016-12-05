@@ -1,6 +1,6 @@
 /**
  * @name ng-backbone
- * @version 0.1.1
+ * @version 1.0.0
  * @author [adrianlee44](https://github.com/adrianlee44)
  * @license https://github.com/adrianlee44/ng-backbone/blob/master/LICENSE.md
  * @dependencies

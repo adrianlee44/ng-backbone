@@ -1,3 +1,9 @@
+# 1.0.0 (2016/12/4)
+## Optimizations
+- **ngBackbone:** Update sync layer to use standard `then` method but fallback if necessary
+  (0286477a)
+
+
 # v0.1.1 (2015/01/29)
 ## Bug Fixes
 - **sync:** add $http promise arguments to options
